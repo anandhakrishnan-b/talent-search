@@ -4,8 +4,10 @@ TalentSearch.VenueController = function () {
 
     this.$page = null;
     this.$btnSubmit = null;
-    this.$txtUserId = null;
-    this.$txtPassword = null;
+    this.$txtVenueName = null;
+    this.$txtLocation = null;
+    this.$txtDateFrom = null;
+    this.$txtDateTo = null;
     this.mainMenuPageId = null;
     this.$ctnErr = null;
 };
@@ -13,8 +15,10 @@ TalentSearch.VenueController = function () {
 TalentSearch.VenueController.prototype.init = function () {
     this.$page = $("#page-venue");
     this.$btnSubmit = $("#btn-submit", this.$page);
-    this.$txtUserId = $("#txt-userId", this.$page);
-    this.$txtPassword = $("#txt-password", this.$page);
+    this.$txtVenueName = $("#txt-venue-name", this.$page);
+    this.$txtLocation = $("#txt-location", this.$page);
+    this.$txtDateFrom = $("#txt-date-from", this.$page);
+    this.$txtDateTo = $("#txt-date-to", this.$page);
     this.$ctnErr = $("#ctn-err", this.$page);
     this.mainMenuPageId = "#page-venue";
 };
@@ -29,36 +33,54 @@ TalentSearch.VenueController.prototype.resetSignInForm = function () {
     this.$ctnErr.removeClass().addClass(invisibleStyle);
     
 
-    this.$txtUserId.removeClass(invalidInputStyle);
-    this.$txtPassword.removeClass(invalidInputStyle);
-   
-   
-    this.$txtUserId.val("");
-    this.$txtPassword.val("");
     
+    this.$txtVenueName.removeClass(invalidInputStyle);
+    this.$txtLocation.removeClass(invalidInputStyle);
+    this.$txtDateFrom.removeClass(invalidInputStyle);
+    this.$txtDateTo.removeClass(invalidInputStyle);
+   
+   
+    this.$txtVenueName.val("");
+    this.$txtLocation.val("");
+    this.$txtDateFrom.val("");
+    this.$txtDateTo.val("");
+      
 };
 
 TalentSearch.VenueController.prototype.onSignInCommand = function () {
 
     var me = this,
-        txtUserId = me.$txtUserId.val().trim(),
-        txtPassword = me.$txtPassword.val().trim(),
+        txtVenueName = me.$txtVenueName.val().trim(),
+        txtLocation = me.$txtLocation.val().trim(),
+        txtDateFrom = me.$txtDateFrom.val().trim(),
+        txtDateTo = me.$txtDateTo.val().trim(),
+        
         btnSubmit = me.$btnSubmit,
         invalidInput = false,
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
 
     // Reset styles.
-    me.$txtUserId.removeClass(invalidInputStyle);
-    me.$txtPassword.removeClass(invalidInputStyle);
+    me.$txtVenueName.removeClass(invalidInputStyle);
+    me.$txtLocation.removeClass(invalidInputStyle);
+    me.$txtDateFrom.removeClass(invalidInputStyle);
+    me.$txtDateTo.removeClass(invalidInputStyle);
     me.$ctnErr.html("");
     // Flag each invalid field.
-    if (txtUserId.length === 0) {
-        me.$txtUserId.addClass(invalidInputStyle);
+    if (txtVenueName.length === 0) {
+        me.$txtVenueName.addClass(invalidInputStyle);
         invalidInput = true;
     }
-    if (txtPassword.length === 0) {
-        me.$txtPassword.addClass(invalidInputStyle);
+    if (txtLocation.length === 0) {
+        me.$txtLocation.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+    if (txtDateFrom.length === 0) {
+        me.$txtLocation.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+    if (txtDateTo.length === 0) {
+        me.$txtLocation.addClass(invalidInputStyle);
         invalidInput = true;
     }
     

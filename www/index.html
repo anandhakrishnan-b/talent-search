@@ -8,7 +8,7 @@
         <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
         <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
         <link rel="stylesheet" href="css/app.css" />
-        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
         <script src="js/jquery.mobile-1.4.5.min.js"></script>
         
         <script src="js/app/api-messages.js"></script>
@@ -19,6 +19,8 @@
         <script src="js/app/selection-controller.js"></script>
         <script src="js/app/signup-controller.js"></script>
         <script src="js/app/venue-controller.js"></script>
+        <script src="js/app/user-controller.js"></script>
+        <script src="js/app/interviewer-controller.js"></script>
         <script src="js/app/index.js"></script>
         
         <title>Talent Search</title>
@@ -53,7 +55,7 @@
                 <p class="mc-top-margin-1-5"><b>To register selection details</b></p>
                 <a href="#page-selection" class="ui-btn ui-btn-b ui-corner-all">Selection Details</a>
                 <p class="mc-top-margin-1-5"><b>To Logout</b></p>
-                <a href="#page-logout" class="ui-btn ui-btn-b ui-corner-all">Logout</a>
+                <a  class="ui-btn ui-btn-b ui-corner-all">Logout</a>
                 <p></p>
             </div><!-- /content -->
         </div>
@@ -67,8 +69,8 @@
                 <div id="ctn-err" class="bi-invisible"></div>
                 <label for="txt-venue-name">Venue Name</label>
                 <input type="text" name="txt-venue-name" id="txt-venue-name" value="">
-                <label for="txt-location-name">Location</label>
-                <input type="text" name="txt-location-name" id="txt-location-name" value="">
+                <label for="txt-location">Location</label>
+                <input type="text" name="txt-location" id="txt-location" value="">
                 <label for="txt-date-from">Date From</label>
                 <input type="date" data-role="date" name="txt-date-from" id="txt-date-from" value="">
                 <label for="txt-date-to">Date To</label>
@@ -84,14 +86,14 @@
             </div><!-- /header -->
             <div role="main" class="ui-content">
                 <div id="ctn-err" class="bi-invisible"></div>
-                <label for="txt-venue-name">Interviewer Name</label>
-                <input type="text" name="txt-venue-name" id="txt-venue-name" value="">
-                <label for="txt-location-name">Employee Id</label>
-                <input type="number" name="txt-location-name" id="txt-location-name" value="">
-                <label for="txt-date-from">Role</label>
-                <input type="text" name="txt-date-from" id="txt-date-from" value="">
-                <label for="txt-date-to">Date</label>
-                <input type="date"  name="txt-date-to" id="txt-date-to" value="">
+                <label for="txt-interviewer-name">Interviewer Name</label>
+                <input type="text" name="txt-interviewer-name" id="txt-interviewer-name" value="">
+                <label for="txt-employee-id">Employee Id</label>
+                <input type="number" name="txt-employee-id" id="txt-employee-id" value="">
+                <label for="txt-role">Role</label>
+                <input type="text" name="txt-role" id="txt-role" value="">
+                <label for="txt-date">Date</label>
+                <input type="date" name="txt-date" id="txt-date" value="">
                 <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
             </div><!-- /content -->
             <table data-role="table" id="table-data" class="ui-responsive table-stroke">
@@ -122,7 +124,7 @@
             <div role="main" class="ui-content" id="selection-edit">
                 <div id="ctn-err" class="bi-invisible"></div>
                 <label for="txt-date">Date</label>
-                <input type="date" name="txt-day" id="txt-date" value="">
+                <input type="date" name="txt-date" id="txt-date" value="">
                 <label for="txt-turnout">Total Turn Out</label>
                 <input type="number" name="txt-turnout" id="txt-turnout" value="">
                 <label for="txt-selected">Total Selected</label>

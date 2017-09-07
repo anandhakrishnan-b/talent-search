@@ -1,56 +1,30 @@
 ﻿var TalentSearch = TalentSearch || {};
 
-TalentSearch.SignInController = function () {
+TalentSearch.InterviewerController = function () {
 
     this.$page = null;
     this.$btnSubmit = null;
-    this.$txtUserId = null;
-    this.$txtPassword = null;
+    this.$txtInterviewerName = null;
+    this.$txtEmployeeId = null;
+    this.$txtRole = null;
+    this.$txtDate = null;
     this.mainMenuPageId = null;
     this.$ctnErr = null;
 };
 
-TalentSearch.SignInController.prototype.init = function () {
-    this.$page = $("#page-signin");
+TalentSearch.InterviewerController.prototype.init = function () {
+    this.$page = $("#page-interviewer");
     this.$btnSubmit = $("#btn-submit", this.$page);
-    this.$txtUserId = $("#txt-userId", this.$page);
-    this.$txtPassword = $("#txt-password", this.$page);
+    this.$txtInterviewerName = $("#txt-interviewer-name", this.$page);
+    this.$txtEmployeeId = $("#txt-employee-id", this.$page);
+    this.$txtRole = $("#txt-role", this.$page);
+    this.$txtDate = $("#txt-date", this.$page);
     this.$ctnErr = $("#ctn-err", this.$page);
-    this.mainMenuPageId = "#page-signin";
+    this.mainMenuPageId = "#page-interviewer";
 };
 
-TalentSearch.SignInController.prototype.sessionCheck = function (e, data) {
-    console.log("session check");
-    if(window.sessionStorage.getItem("sessionTime") !=null) {
-           console.log("session check 1");
-        var sessionTime = window.sessionStorage.getItem("sessionTime");
-        var now = new Date().getTime();
-        if(now > sessionTime){
-            console.log("session check 2");
-            window.sessionStorage.removeItem("sessionId");
-            window.sessionStorage.removeItem("sessionTime");
-            window.sessionStorage.removeItem("role");
-            $.mobile.changePage("#page-signin", "slide", true, true);
-            this.$ctnErr.html("<div class='error'>Session Timed Out, please login again</div>");
-            e.preventDefault();
-            e.stopPropagation();
-       }
-    console.log("session check 3");
-    }else{
-        console.log("session check 4");
-        window.sessionStorage.removeItem("sessionId");
-        window.sessionStorage.removeItem("sessionTime");
-        window.sessionStorage.removeItem("role");
-        $.mobile.changePage("#page-signin", "slide", true, true);
-        this.$ctnErr.html("<div class='error'>Session Timed Out, please login again</div>");
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    console.log("session check 5");
-}
 
-
-TalentSearch.SignInController.prototype.resetSignInForm = function () {
+TalentSearch.InterviewerController.prototype.resetSignInForm = function () {
 
     var invisibleStyle = "bi-invisible",
     invalidInputStyle = "bi-invalid-input";
@@ -58,36 +32,54 @@ TalentSearch.SignInController.prototype.resetSignInForm = function () {
     this.$ctnErr.html("");
     this.$ctnErr.removeClass().addClass(invisibleStyle);
     
-
-    this.$txtUserId.removeClass(invalidInputStyle);
-    this.$txtPassword.removeClass(invalidInputStyle);
+    
+    this.$txtInterviewerName.removeClass(invalidInputStyle);
+    this.$txtEmployeeId.removeClass(invalidInputStyle);
+    this.$txtRole.removeClass(invalidInputStyle);
+    this.$txtDate.removeClass(invalidInputStyle);
    
    
-    this.$txtUserId.val("");
-    this.$txtPassword.val("");
+    this.$txtInterviewerName.val("");
+    this.$txtEmployeeId.val("");
+    this.$txtRole.val("");
+    this.$txtDate.val("");
     
 };
 
-TalentSearch.SignInController.prototype.onSignInCommand = function () {
+TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
 
     var me = this,
-        txtUserId = me.$txtUserId.val().trim(),
-        txtPassword = me.$txtPassword.val().trim(),
+        txtInterviewerName = me.$txtInterviewerName.val().trim(),
+        txtEmployeeId = me.$txtEmployeeId.val().trim(),
+        txtRole = me.$txtRole.val().trim(),
+        txtDate = me.$txtDate.val().trim(),
+        
         btnSubmit = me.$btnSubmit,
         invalidInput = false,
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
 
     // Reset styles.
-    me.$txtUserId.removeClass(invalidInputStyle);
-    me.$txtPassword.removeClass(invalidInputStyle);
+    me.$txtInterviewerName.removeClass(invalidInputStyle);
+    me.$txtEmployeeId.removeClass(invalidInputStyle);
+    me.$txtRole.removeClass(invalidInputStyle);
+    me.$txtDate.removeClass(invalidInputStyle);
+    me.$ctnErr.removeClass(invalidInputStyle);
     me.$ctnErr.html("");
     // Flag each invalid field.
-    if (txtUserId.length === 0) {
+    if (txtInterviewerName.length === 0) {
         me.$txtUserId.addClass(invalidInputStyle);
         invalidInput = true;
     }
-    if (txtPassword.length === 0) {
+    if (txtEmployeeId.length === 0) {
+        me.$txtPassword.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+    if (txtRole.length === 0) {
+        me.$txtPassword.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+    if (txtDate.length === 0) {
         me.$txtPassword.addClass(invalidInputStyle);
         invalidInput = true;
     }

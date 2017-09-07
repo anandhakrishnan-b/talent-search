@@ -1,6 +1,6 @@
 ﻿var TalentSearch = TalentSearch || {};
 
-TalentSearch.SignInController = function () {
+TalentSearch.UserController = function () {
 
     this.$page = null;
     this.$btnSubmit = null;
@@ -10,47 +10,17 @@ TalentSearch.SignInController = function () {
     this.$ctnErr = null;
 };
 
-TalentSearch.SignInController.prototype.init = function () {
-    this.$page = $("#page-signin");
+TalentSearch.UserController.prototype.init = function () {
+    this.$page = $("#page-venue");
     this.$btnSubmit = $("#btn-submit", this.$page);
     this.$txtUserId = $("#txt-userId", this.$page);
     this.$txtPassword = $("#txt-password", this.$page);
     this.$ctnErr = $("#ctn-err", this.$page);
-    this.mainMenuPageId = "#page-signin";
+    this.mainMenuPageId = "#page-venue";
 };
 
-TalentSearch.SignInController.prototype.sessionCheck = function (e, data) {
-    console.log("session check");
-    if(window.sessionStorage.getItem("sessionTime") !=null) {
-           console.log("session check 1");
-        var sessionTime = window.sessionStorage.getItem("sessionTime");
-        var now = new Date().getTime();
-        if(now > sessionTime){
-            console.log("session check 2");
-            window.sessionStorage.removeItem("sessionId");
-            window.sessionStorage.removeItem("sessionTime");
-            window.sessionStorage.removeItem("role");
-            $.mobile.changePage("#page-signin", "slide", true, true);
-            this.$ctnErr.html("<div class='error'>Session Timed Out, please login again</div>");
-            e.preventDefault();
-            e.stopPropagation();
-       }
-    console.log("session check 3");
-    }else{
-        console.log("session check 4");
-        window.sessionStorage.removeItem("sessionId");
-        window.sessionStorage.removeItem("sessionTime");
-        window.sessionStorage.removeItem("role");
-        $.mobile.changePage("#page-signin", "slide", true, true);
-        this.$ctnErr.html("<div class='error'>Session Timed Out, please login again</div>");
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    console.log("session check 5");
-}
 
-
-TalentSearch.SignInController.prototype.resetSignInForm = function () {
+TalentSearch.UserController.prototype.resetSignInForm = function () {
 
     var invisibleStyle = "bi-invisible",
     invalidInputStyle = "bi-invalid-input";
@@ -68,7 +38,7 @@ TalentSearch.SignInController.prototype.resetSignInForm = function () {
     
 };
 
-TalentSearch.SignInController.prototype.onSignInCommand = function () {
+TalentSearch.UserController.prototype.onSignInCommand = function () {
 
     var me = this,
         txtUserId = me.$txtUserId.val().trim(),

@@ -53,6 +53,7 @@ $(document).on("mobileinit", function (event, ui) {
 app.signInController = new TalentSearch.SignInController();
 app.venueController = new TalentSearch.VenueController();
 app.selectionController = new TalentSearch.SelectionController();
+app.interviewerController = new TalentSearch.InterviewerController();
 //$(document).delegate("#page-signup", "pagebeforeshow", function () {
 //    // Reset the signup form.
 //    app.signInController.resetSignUpForm();
@@ -68,6 +69,23 @@ $(document).on("pagecontainerbeforeshow", function (event, ui) {
         }
     }
 });
+
+$(document).on("pagebeforechange", function (event, ui) {
+    if (typeof ui.toPage == "object") {
+        switch (ui.toPage.attr("id")) {
+            case "page-venue":
+                app.signInController.sessionCheck(event, ui);
+                break;
+            case "page-selection":
+                app.signInController.sessionCheck(event, ui);
+                break;
+            case "page-interviewer":
+                app.signInController.sessionCheck(event, ui);
+                break;
+        }
+    }
+});
+
 
 $(document).delegate("#page-signin", "pagebeforecreate", function () {
 
@@ -97,4 +115,21 @@ $(document).delegate("#page-selection", "pagebeforecreate", function () {
         app.selectionController.onSignInCommand();
     });
 
+});
+$(document).delegate("#page-interviewer", "pagebeforecreate", function () {
+
+    app.interviewerController.init();
+
+    app.interviewerController.$btnSubmit.off("tap").on("tap", function () {
+        app.interviewerController.onSignInCommand();
+    });
+
+});
+
+
+$(document).on("click", "#page-home a", function() {
+    window.sessionStorage.removeItem("sessionId");
+    window.sessionStorage.removeItem("sessionTime");
+    window.sessionStorage.removeItem("role");
+    $.mobile.changePage("#page-signin", "slide", true, true);
 });
