@@ -83,6 +83,10 @@ TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
         me.$txtDate.addClass(invalidInputStyle);
         invalidInput = true;
     }
+    if (txtDate === 'dd-mm-yyyy') {
+        me.$txtDate.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
     
     // Make sure that all the required fields have values.
     if (invalidInput) {

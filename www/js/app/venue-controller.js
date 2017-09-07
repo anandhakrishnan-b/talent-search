@@ -83,7 +83,14 @@ TalentSearch.VenueController.prototype.onSignInCommand = function () {
         me.$txtLocation.addClass(invalidInputStyle);
         invalidInput = true;
     }
-    
+    if (txtDateFrom === 'dd-mm-yyyy') {
+        me.$txtDateFrom.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+    if (txtDateTo === 'dd-mm-yyyy') {
+        me.$txtDateTo.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
     // Make sure that all the required fields have values.
     if (invalidInput) {
         me.$ctnErr.html("<div class='error'>Please enter all the required fields.</div>");

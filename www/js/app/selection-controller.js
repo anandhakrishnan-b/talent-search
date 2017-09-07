@@ -18,7 +18,7 @@ TalentSearch.SelectionController.prototype.init = function () {
     this.$txtDate = $("#txt-date", this.$page);
     this.$txtTurnout = $("#txt-turnout", this.$page);
     this.$txtSelected= $("#txt-selected", this.$page);
-    this.$txtWomen = $("#txt-wommen", this.$page);
+    this.$txtWomen = $("#txt-women", this.$page);
     this.$txtComments = $("#txt-comments", this.$page);
     this.$ctnErr = $("#ctn-err", this.$page);
     this.mainMenuPageId = "#page-selection";
@@ -75,6 +75,11 @@ TalentSearch.SelectionController.prototype.onSignInCommand = function () {
         me.$txtDate.addClass(invalidInputStyle);
         invalidInput = true;
     }
+    if (txtDate === 'dd-mm-yyyy') {
+        me.$txtDate.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+    
     if (txtSelected.length === 0) {
         me.$txtSelected.addClass(invalidInputStyle);
         invalidInput = true;
