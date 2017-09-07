@@ -13,6 +13,19 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener("backbutton", function(e){
+            if($.mobile.activePage.is('#page-signin')){
+                /* 
+                 Event preventDefault/stopPropagation not required as adding backbutton
+                  listener itself override the default behaviour. Refer below PhoneGap link.
+                */
+                //e.preventDefault();
+                navigator.app.exitApp();
+            }
+            else {
+                navigator.app.backHistory()
+            }
+            }, false);
     },
     // deviceready Event Handler
     //
@@ -34,6 +47,8 @@ app.initialize();
 $(document).on("mobileinit", function (event, ui) {
     $.mobile.defaultPageTransition = "slide";
 });
+
+
 
 app.signInController = new TalentSearch.SignInController();
 app.venueController = new TalentSearch.VenueController();
