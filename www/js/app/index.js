@@ -74,13 +74,13 @@ $(document).on("pagebeforechange", function (event, ui) {
     if (typeof ui.toPage == "object") {
         switch (ui.toPage.attr("id")) {
             case "page-venue":
-                app.signInController.sessionCheck(event, ui);
+                //app.signInController.sessionCheck(event, ui);
                 break;
             case "page-selection":
-                app.signInController.sessionCheck(event, ui);
+                //app.signInController.sessionCheck(event, ui);
                 break;
             case "page-interviewer":
-                app.signInController.sessionCheck(event, ui);
+                //app.signInController.sessionCheck(event, ui);
                 break;
         }
     }
@@ -127,7 +127,7 @@ $(document).delegate("#page-interviewer", "pagebeforecreate", function () {
 });
 
 
-$(document).on("click", "#page-home a", function() {
+$(document).on("click", "#page-home .logout", function() {
     window.sessionStorage.removeItem("sessionId");
     window.sessionStorage.removeItem("sessionTime");
     window.sessionStorage.removeItem("role");

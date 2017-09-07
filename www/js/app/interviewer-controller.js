@@ -68,19 +68,19 @@ TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
     me.$ctnErr.html("");
     // Flag each invalid field.
     if (txtInterviewerName.length === 0) {
-        me.$txtUserId.addClass(invalidInputStyle);
+        me.$txtInterviewerName.addClass(invalidInputStyle);
         invalidInput = true;
     }
     if (txtEmployeeId.length === 0) {
-        me.$txtPassword.addClass(invalidInputStyle);
+        me.$txtEmployeeId.addClass(invalidInputStyle);
         invalidInput = true;
     }
     if (txtRole.length === 0) {
-        me.$txtPassword.addClass(invalidInputStyle);
+        me.$txtRole.addClass(invalidInputStyle);
         invalidInput = true;
     }
     if (txtDate.length === 0) {
-        me.$txtPassword.addClass(invalidInputStyle);
+        me.$txtDate.addClass(invalidInputStyle);
         invalidInput = true;
     }
     
