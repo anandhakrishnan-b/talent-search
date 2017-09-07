@@ -121,3 +121,12 @@ TalentSearch.SelectionController.prototype.onSignInCommand = function () {
         }
     });
 };
+
+    
+$("#table-data tr:last td:not(:first,:last)").text(function(i){
+    var t = 0;
+    $(this).parent().prevAll().find("td:nth-child("+(i + 2)+")").each(function(){
+        t += parseInt( $(this).text(), 10 ) || 0;
+    });
+    return "Total: " + t;
+});

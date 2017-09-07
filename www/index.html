@@ -36,7 +36,7 @@
             <input type="text" name="txt-userId" id="txt-userId" value="">
             <label for="txt-password">Password</label>
             <input type="password" name="txt-password" id="txt-password" value="">
-            <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <a href="#page-home" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
         </div><!-- /content -->
         </div><!-- /page -->
 
@@ -48,10 +48,10 @@
                 <h2 class="mc-text-center">Welcome!</h2>
                 <p class="mc-top-margin-1-5"><b>To see venue details</b></p>
                 <a href="#page-venue" class="ui-btn ui-btn-b ui-corner-all">Venue Details</a>
-                <p class="mc-top-margin-1-5"><b>To register selection details</b></p>
-                <a href="#page-selection" class="ui-btn ui-btn-b ui-corner-all">Selection Details</a>
                 <p class="mc-top-margin-1-5"><b>To register interviewer details</b></p>
                 <a href="#page-interviewer" class="ui-btn ui-btn-b ui-corner-all">Interviewer Details</a>
+                <p class="mc-top-margin-1-5"><b>To register selection details</b></p>
+                <a href="#page-selection" class="ui-btn ui-btn-b ui-corner-all">Selection Details</a>
                 <p class="mc-top-margin-1-5"><b>To Logout</b></p>
                 <a href="#page-logout" class="ui-btn ui-btn-b ui-corner-all">Logout</a>
                 <p></p>
@@ -60,14 +60,14 @@
 
         <div data-role="page" id="page-venue">
             <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
-                <a href="#page-index" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
+                <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
                 <h1>Venue Details</h1>
             </div><!-- /header -->
             <div role="main" class="ui-content">
                 <div id="ctn-err" class="bi-invisible"></div>
                 <label for="txt-venue-name">Venue Name</label>
                 <input type="text" name="txt-venue-name" id="txt-venue-name" value="">
-                <label for="txt-location-name">Location Name</label>
+                <label for="txt-location-name">Location</label>
                 <input type="text" name="txt-location-name" id="txt-location-name" value="">
                 <label for="txt-date-from">Date From</label>
                 <input type="date" data-role="date" name="txt-date-from" id="txt-date-from" value="">
@@ -79,7 +79,7 @@
 
         <div data-role="page" id="page-interviewer">
             <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
-                <a href="#page-index" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
+                <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
                 <h1>Interviewer Details</h1>
             </div><!-- /header -->
             <div role="main" class="ui-content">
@@ -90,21 +90,39 @@
                 <input type="text" name="txt-location-name" id="txt-location-name" value="">
                 <label for="txt-date-from">Role</label>
                 <input type="text" name="txt-date-from" id="txt-date-from" value="">
-                <label for="txt-date-to">Date 11 </label>
+                <label for="txt-date-to">Date</label>
                 <input type="date"  name="txt-date-to" id="txt-date-to" value="">
                 <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
             </div><!-- /content -->
+            <table data-role="table" id="table-data" class="ui-responsive table-stroke">
+            <thead>
+           <tr>
+             <th data-priority="2">Interviewer Name</th>
+             <th>Employee Id</th>
+             <th data-priority="3">Role</th>
+             <th data-priority="1"><abbr title="Rotten Tomato Rating">Date</abbr></th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td>AAAAA</td>
+             <td>1200</td>
+             <td>HR</td>
+             <td>2017-12-20</td>
+           </tr>
+           </tbody>
+           </table>
         </div><!-- /page -->
 
       <div data-role="page" id="page-selection">
             <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
-                <a href="#page-index" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
+                <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
                 <h1>Selection Details</h1>
             </div>
-            <div role="main" class="ui-content">
+            <div role="main" class="ui-content" id="selection-edit">
                 <div id="ctn-err" class="bi-invisible"></div>
                 <label for="txt-date">Date</label>
-                <input type="text" name="txt-day" id="txt-date" value="">
+                <input type="date" name="txt-day" id="txt-date" value="">
                 <label for="txt-turnout">Total Turn Out</label>
                 <input type="text" name="txt-turnout" id="txt-turnout" value="">
                 <label for="txt-selected">Total Selected</label>
@@ -115,7 +133,7 @@
                 <input type="text"  name="txt-comments" id="txt-comments" value="">
                 <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
             </div><!-- /header -->
-            <table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+            <table data-role="table" id="table-data" class="ui-responsive table-stroke">
             <thead>
            <tr>
              <th data-priority="2">Date</th>
@@ -127,7 +145,7 @@
          </thead>
          <tbody>
            <tr>
-             <th>2017-06-20</th>
+             <td>2017-06-20</td>
              <td>1200</td>
              <td>500</td>
              <td>120</td>
