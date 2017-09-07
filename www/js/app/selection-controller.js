@@ -2,7 +2,7 @@
 
 TalentSearch.SelectionController = function () {
 
-    this.$signIn = null;
+    this.$page = null;
     this.$btnSubmit = null;
     this.$txtUserId = null;
     this.$txtPassword = null;
@@ -11,12 +11,12 @@ TalentSearch.SelectionController = function () {
 };
 
 TalentSearch.SelectionController.prototype.init = function () {
-    this.$signIn = $("#page-signin");
-    this.$btnSubmit = $("#btn-submit", this.$signIn);
-    this.$txtUserId = $("#txt-userId", this.$signIn);
-    this.$txtPassword = $("#txt-password", this.$signIn);
-    this.$ctnErr = $("#ctn-err", this.$signIn);
-    this.mainMenuPageId = "#page-signin";
+    this.$page = $("#page-selection");
+    this.$btnSubmit = $("#btn-submit", this.$page);
+    this.$txtUserId = $("#txt-userId", this.$page);
+    this.$txtPassword = $("#txt-password", this.$page);
+    this.$ctnErr = $("#ctn-err", this.$page);
+    this.mainMenuPageId = "#page-selection";
 };
 
 
