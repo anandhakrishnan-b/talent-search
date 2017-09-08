@@ -39,7 +39,7 @@ TalentSearch.SelectionController.prototype.resetSignInForm = function () {
     this.$txtWomen.removeClass(invalidInputStyle);
     this.$txtComments.removeClass(invalidInputStyle);
     
-   
+    
     this.$txtDate.val("");
     this.$txtTurnout.val("");
     this.$txtSelected.val("");
@@ -52,17 +52,17 @@ TalentSearch.SelectionController.prototype.resetSignInForm = function () {
 TalentSearch.SelectionController.prototype.onSignInCommand = function () {
 
     var me = this,
-        txtDate = me.$txtDate.val().trim(),
-        txtTurnout = me.$txtTurnout.val().trim(),
-        txtSelected = me.$txtSelected.val().trim(),
-        txtWomen = me.$txtWomen.val().trim(),
-        txtComments = me.$txtComments.val().trim(),
-       
-        btnSubmit = me.$btnSubmit,
-        invalidInput = false,
-        invisibleStyle = "bi-invisible",
-        invalidInputStyle = "bi-invalid-input";
-                
+    txtDate = me.$txtDate.val().trim(),
+    txtTurnout = me.$txtTurnout.val().trim(),
+    txtSelected = me.$txtSelected.val().trim(),
+    txtWomen = me.$txtWomen.val().trim(),
+    txtComments = me.$txtComments.val().trim(),
+    
+    btnSubmit = me.$btnSubmit,
+    invalidInput = false,
+    invisibleStyle = "bi-invisible",
+    invalidInputStyle = "bi-invalid-input";
+    
     // Reset styles.
     me.$txtDate.removeClass(invalidInputStyle);
     me.$txtTurnout.removeClass(invalidInputStyle);
@@ -132,14 +132,14 @@ TalentSearch.SelectionController.prototype.onSignInCommand = function () {
                 if (resp.extras.msg) {
                     switch (resp.extras.msg) {
                         case TalentSearch.ApiMessages.SERVER_ERROR:
-                            me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
-                            me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                            break;
+                        me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
+                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
+                        break;
                         case TalentSearch.ApiMessages.INVALID_CREDENTIALS:
-                            me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
-                            me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                            me.$txtEmailAddress.addClass(invalidInputStyle);
-                            break;
+                        me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
+                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
+                        me.$txtEmailAddress.addClass(invalidInputStyle);
+                        break;
                     }
                 }
             }
@@ -153,7 +153,7 @@ TalentSearch.SelectionController.prototype.onSignInCommand = function () {
     });
 };
 
-    
+
 $("#table-data tr:last td:not(:first,:last)").text(function(i){
     var t = 0;
     $(this).parent().prevAll().find("td:nth-child("+(i + 2)+")").each(function(){

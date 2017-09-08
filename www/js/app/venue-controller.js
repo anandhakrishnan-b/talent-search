@@ -38,27 +38,27 @@ TalentSearch.VenueController.prototype.resetSignInForm = function () {
     this.$txtLocation.removeClass(invalidInputStyle);
     this.$txtDateFrom.removeClass(invalidInputStyle);
     this.$txtDateTo.removeClass(invalidInputStyle);
-   
-   
+    
+    
     this.$txtVenueName.val("");
     this.$txtLocation.val("");
     this.$txtDateFrom.val("");
     this.$txtDateTo.val("");
-      
+    
 };
 
 TalentSearch.VenueController.prototype.onSignInCommand = function () {
 
     var me = this,
-        txtVenueName = me.$txtVenueName.val().trim(),
-        txtLocation = me.$txtLocation.val().trim(),
-        txtDateFrom = me.$txtDateFrom.val().trim(),
-        txtDateTo = me.$txtDateTo.val().trim(),
-        
-        btnSubmit = me.$btnSubmit,
-        invalidInput = false,
-        invisibleStyle = "bi-invisible",
-        invalidInputStyle = "bi-invalid-input";
+    txtVenueName = me.$txtVenueName.val().trim(),
+    txtLocation = me.$txtLocation.val().trim(),
+    txtDateFrom = me.$txtDateFrom.val().trim(),
+    txtDateTo = me.$txtDateTo.val().trim(),
+    
+    btnSubmit = me.$btnSubmit,
+    invalidInput = false,
+    invisibleStyle = "bi-invisible",
+    invalidInputStyle = "bi-invalid-input";
 
     // Reset styles.
     me.$txtVenueName.removeClass(invalidInputStyle);
@@ -76,11 +76,11 @@ TalentSearch.VenueController.prototype.onSignInCommand = function () {
         invalidInput = true;
     }
     if (txtDateFrom.length === 0) {
-        me.$txtLocation.addClass(invalidInputStyle);
+        me.$txtDateFrom.addClass(invalidInputStyle);
         invalidInput = true;
     }
     if (txtDateTo.length === 0) {
-        me.$txtLocation.addClass(invalidInputStyle);
+        me.$txtDateTo.addClass(invalidInputStyle);
         invalidInput = true;
     }
     if (txtDateFrom === 'dd-mm-yyyy') {
@@ -130,14 +130,14 @@ TalentSearch.VenueController.prototype.onSignInCommand = function () {
                 if (resp.extras.msg) {
                     switch (resp.extras.msg) {
                         case TalentSearch.ApiMessages.SERVER_ERROR:
-                            me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
-                            me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                            break;
+                        me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
+                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
+                        break;
                         case TalentSearch.ApiMessages.INVALID_CREDENTIALS:
-                            me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
-                            me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                            me.$txtEmailAddress.addClass(invalidInputStyle);
-                            break;
+                        me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
+                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
+                        me.$txtEmailAddress.addClass(invalidInputStyle);
+                        break;
                     }
                 }
             }

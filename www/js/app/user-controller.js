@@ -4,19 +4,21 @@ TalentSearch.UserController = function () {
 
     this.$page = null;
     this.$btnSubmit = null;
-    this.$txtUserId = null;
-    this.$txtPassword = null;
+    this.$selectVenueId = null;
+    this.$txtUser = null;
+    this.$selectStatus = null;
     this.mainMenuPageId = null;
     this.$ctnErr = null;
 };
 
 TalentSearch.UserController.prototype.init = function () {
-    this.$page = $("#page-venue");
+    this.$page = $("#page-user");
     this.$btnSubmit = $("#btn-submit", this.$page);
-    this.$txtUserId = $("#txt-userId", this.$page);
-    this.$txtPassword = $("#txt-password", this.$page);
+    this.$selectVenueId = $("#select-venue", this.$page);
+    this.$txtUser = $("#txt-user", this.$page);
+    this.$selectStatus = $("#select-status", this.$page);
     this.$ctnErr = $("#ctn-err", this.$page);
-    this.mainMenuPageId = "#page-venue";
+    this.mainMenuPageId = "#page-user";
 };
 
 
@@ -28,39 +30,43 @@ TalentSearch.UserController.prototype.resetSignInForm = function () {
     this.$ctnErr.html("");
     this.$ctnErr.removeClass().addClass(invisibleStyle);
     
-
-    this.$txtUserId.removeClass(invalidInputStyle);
-    this.$txtPassword.removeClass(invalidInputStyle);
-   
-   
-    this.$txtUserId.val("");
-    this.$txtPassword.val("");
+    this.$selectVenueId.removeClass(invalidInputStyle);
+    this.$txtUser.removeClass(invalidInputStyle);
+    this.$selectStatus.removeClass(invalidInputStyle);
+    
+    
+    this.$txtUser.val("");
+    this.$selectVenueId.val("");
+    this.$selectStatus.val("");
     
 };
 
 TalentSearch.UserController.prototype.onSignInCommand = function () {
 
     var me = this,
-        txtUserId = me.$txtUserId.val().trim(),
-        txtPassword = me.$txtPassword.val().trim(),
-        btnSubmit = me.$btnSubmit,
-        invalidInput = false,
-        invisibleStyle = "bi-invisible",
-        invalidInputStyle = "bi-invalid-input";
+    txtUser = me.$txtUser.val().trim(),
+    selectVenueId = me.$selectVenueId.val(),
+    selectStatus = me.$selectStatus.val(),
+    btnSubmit = me.$btnSubmit,
+    invalidInput = false,
+    invisibleStyle = "bi-invisible",
+    invalidInputStyle = "bi-invalid-input";
 
     // Reset styles.
-    me.$txtUserId.removeClass(invalidInputStyle);
-    me.$txtPassword.removeClass(invalidInputStyle);
+    me.$txtUser.removeClass(invalidInputStyle);
+    me.$selectVenueId.removeClass(invalidInputStyle);
+    me.$selectStatus.removeClass(invalidInputStyle);
     me.$ctnErr.html("");
     // Flag each invalid field.
-    if (txtUserId.length === 0) {
-        me.$txtUserId.addClass(invalidInputStyle);
+    if (txtUser.length === 0) {
+        me.$txtUser.addClass(invalidInputStyle);
         invalidInput = true;
     }
-    if (txtPassword.length === 0) {
-        me.$txtPassword.addClass(invalidInputStyle);
+    if (selectVenueId === '') {
+        me.$selectVenueId.addClass(invalidInputStyle);
         invalidInput = true;
     }
+    
     
     // Make sure that all the required fields have values.
     if (invalidInput) {
@@ -101,14 +107,14 @@ TalentSearch.UserController.prototype.onSignInCommand = function () {
                 if (resp.extras.msg) {
                     switch (resp.extras.msg) {
                         case TalentSearch.ApiMessages.SERVER_ERROR:
-                            me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
-                            me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                            break;
+                        me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
+                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
+                        break;
                         case TalentSearch.ApiMessages.INVALID_CREDENTIALS:
-                            me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
-                            me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                            me.$txtEmailAddress.addClass(invalidInputStyle);
-                            break;
+                        me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
+                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
+                        me.$txtEmailAddress.addClass(invalidInputStyle);
+                        break;
                     }
                 }
             }

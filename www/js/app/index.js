@@ -18,14 +18,17 @@ var app = {
                 /* 
                  Event preventDefault/stopPropagation not required as adding backbutton
                   listener itself override the default behaviour. Refer below PhoneGap link.
-                */
+                  */
                 //e.preventDefault();
+                window.sessionStorage.removeItem("sessionId");
+                window.sessionStorage.removeItem("sessionTime");
+                window.sessionStorage.removeItem("role");
                 navigator.app.exitApp();
             }
             else {
                 navigator.app.backHistory()
             }
-            }, false);
+        }, false);
     },
     // deviceready Event Handler
     //
@@ -54,6 +57,7 @@ app.signInController = new TalentSearch.SignInController();
 app.venueController = new TalentSearch.VenueController();
 app.selectionController = new TalentSearch.SelectionController();
 app.interviewerController = new TalentSearch.InterviewerController();
+app.userController = new TalentSearch.UserController();
 //$(document).delegate("#page-signup", "pagebeforeshow", function () {
 //    // Reset the signup form.
 //    app.signInController.resetSignUpForm();
@@ -66,25 +70,28 @@ $(document).on("pagecontainerbeforeshow", function (event, ui) {
                 // Reset the signup form.
                 app.signInController.resetSignInForm();
                 break;
+            }
         }
-    }
-});
+    });
 
 $(document).on("pagebeforechange", function (event, ui) {
     if (typeof ui.toPage == "object") {
         switch (ui.toPage.attr("id")) {
             case "page-venue":
-                //app.signInController.sessionCheck(event, ui);
+                    app.signInController.sessionCheck(event, ui);
                 break;
-            case "page-selection":
-                //app.signInController.sessionCheck(event, ui);
+                case "page-selection":
+                    app.signInController.sessionCheck(event, ui);
                 break;
-            case "page-interviewer":
-                //app.signInController.sessionCheck(event, ui);
+                case "page-interviewer":
+                    app.signInController.sessionCheck(event, ui);
                 break;
+                case "page-user":
+                    app.signInController.sessionCheck(event, ui);
+                break;
+            }
         }
-    }
-});
+    });
 
 
 $(document).delegate("#page-signin", "pagebeforecreate", function () {
@@ -122,6 +129,16 @@ $(document).delegate("#page-interviewer", "pagebeforecreate", function () {
 
     app.interviewerController.$btnSubmit.off("tap").on("tap", function () {
         app.interviewerController.onSignInCommand();
+    });
+
+});
+
+$(document).delegate("#page-user", "pagebeforecreate", function () {
+
+    app.userController.init();
+
+    app.userController.$btnSubmit.off("tap").on("tap", function () {
+        app.userController.onSignInCommand();
     });
 
 });
