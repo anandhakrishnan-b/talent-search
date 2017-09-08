@@ -24,7 +24,7 @@ TalentSearch.SignInController.prototype.sessionCheck = function (e, data) {
     var today = new Date();
     console.log("session check0" + today.getTime());
     if (window.sessionStorage.getItem("sessionTime") == null || window.sessionStorage.getItem("sessionTime") !=null && 
-        window.sessionStorage.getItem("sessionTime") < today.getTime()) {
+        window.sessionStorage.getItem("sessionTime") > today.getTime()) {
         console.log("session check 1");
         window.sessionStorage.removeItem("sessionId");
         window.sessionStorage.removeItem("sessionTime");
