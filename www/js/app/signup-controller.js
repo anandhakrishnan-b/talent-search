@@ -20,11 +20,11 @@ TalentSearch.SignInController.prototype.init = function () {
 };
 
 TalentSearch.SignInController.prototype.sessionCheck = function (e, data) {
-    console.log("session check" + window.sessionStorage.getItem("sessionTime"));
+    console.log(window.sessionStorage.getItem("sessionTime"));
     var today = new Date();
-    console.log("session check0" + today.getTime());
+    console.log(today.getTime());
     if (window.sessionStorage.getItem("sessionTime") == null || window.sessionStorage.getItem("sessionTime") !=null && 
-        window.sessionStorage.getItem("sessionTime") > today.getTime()) {
+        window.sessionStorage.getItem("sessionTime") < today.getTime()) {
         console.log("session check 1");
         window.sessionStorage.removeItem("sessionId");
         window.sessionStorage.removeItem("sessionTime");
@@ -91,7 +91,8 @@ TalentSearch.SignInController.prototype.onSignInCommand = function () {
     window.sessionStorage.setItem("sessionId", Math.floor((1 + Math.random()) * 0x10000).toString(16));
     window.sessionStorage.setItem("sessionTime", today.getTime() + TalentSearch.Settings.sessionTimeoutInMSec);
     window.sessionStorage.setItem("role", "1");
-    
+    $.mobile.changePage("#page-home", "slide", true, true);
+    return;
     $.mobile.loading("show");
     //window.sessionStorage.setItem("hello", "sessionId");
     //alert(window.sessionStorage.getItem("hello"));
