@@ -51,7 +51,7 @@
             <p class="mc-top-margin-1-5"><b>To see venue details</b></p>
             <a href="#page-venue" class="ui-btn ui-btn-b ui-corner-all">Venue Details</a>
             <p class="mc-top-margin-1-5"><b>To register interviewer details</b></p>
-            <a href="#page-interviewer" class="ui-btn ui-btn-b ui-corner-all">Interviewer Details</a>
+            <a href="#page-interviewer" class="ui-btn ui-btn-b ui-corner-all">Panel Details</a>
             <p class="mc-top-margin-1-5"><b>To register selection details</b></p>
             <a href="#page-selection" class="ui-btn ui-btn-b ui-corner-all">Selection Details</a>
             <p class="mc-top-margin-1-5"><b>To add new user</b></p>
@@ -128,16 +128,21 @@
     <div data-role="page" id="page-interviewer">
         <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
             <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
-            <h1>Interviewer Details</h1>
+            <h1>Panel Details</h1>
         </div><!-- /header -->
         <div role="main" class="ui-content">
             <div id="ctn-err" class="bi-invisible"></div>
-            <label for="txt-interviewer-name">Interviewer Name</label>
+            <label for="txt-interviewer-name">Name</label>
             <input type="text" name="txt-interviewer-name" id="txt-interviewer-name" value="">
             <label for="txt-employee-id">Employee Id</label>
             <input type="number" name="txt-employee-id" id="txt-employee-id" value="">
             <label for="txt-role">Role</label>
-            <input type="text" name="txt-role" id="txt-role" value="">
+            <select id="select-role">
+                <option value="HR">HR</option>
+                <option value="Technincal">Technical</option>
+            </select>
+            <label for="txt-mobile">Mobile Number</label>
+            <input type="number" name="txt-mobile" id="txt-mobile" value="">
             <label for="txt-date">Date</label>
             <input type="date" name="txt-date" id="txt-date" value="">
             <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
