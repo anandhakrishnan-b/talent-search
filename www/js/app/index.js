@@ -23,6 +23,7 @@ var app = {
                 window.sessionStorage.removeItem("sessionId");
                 window.sessionStorage.removeItem("sessionTime");
                 window.sessionStorage.removeItem("role");
+                window.sessionStorage.removeItem("userId");
                 navigator.app.exitApp();
             }
             else {
@@ -77,17 +78,60 @@ $(document).on("pagecontainerbeforeshow", function (event, ui) {
 $(document).on("pagebeforechange", function (event, ui) {
     if (typeof ui.toPage == "object") {
         switch (ui.toPage.attr("id")) {
+
             case "page-venue":
                     app.signInController.sessionCheck(event, ui);
+                    if(app.signInController.sessionCheck(event, ui)){
+                        app.venueController.resetSignInForm();
+                        app.venueController.loadPageCommand();
+                    } else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
                 break;
                 case "page-selection":
-                    app.signInController.sessionCheck(event, ui);
+                  
+                    if(app.signInController.sessionCheck(event, ui)){
+                        app.selectionController.resetSignInForm();
+                        app.selectionController.loadPageCommand();
+                    } else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
                 break;
                 case "page-interviewer":
-                    app.signInController.sessionCheck(event, ui);
+                    
+                    if(app.signInController.sessionCheck(event, ui)){
+                        app.interviewerController.resetSignInForm();
+                        app.interviewerController.loadPageCommand();
+                    } else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
                 break;
                 case "page-user":
-                    app.signInController.sessionCheck(event, ui);
+                    alert("page-user");
+                    if(app.signInController.sessionCheck(event, ui)){
+                        app.userController.resetSignInForm();
+                        app.userController.loadPageCommand();
+                    } else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                break;
+                case "page-home":
+             
+                if(app.signInController.sessionCheck(event, ui)){
+                    if(window.sessionStorage.getItem("role") == 1 ){
+                       $("#user-menu").show();
+                    } else {
+                        $("#user-menu").hide();
+                    }
+                    } else {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+          
                 break;
             }
         }

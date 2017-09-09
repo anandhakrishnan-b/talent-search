@@ -29,11 +29,12 @@ TalentSearch.SignInController.prototype.sessionCheck = function (e, data) {
         window.sessionStorage.removeItem("sessionId");
         window.sessionStorage.removeItem("sessionTime");
         window.sessionStorage.removeItem("role");
+        window.sessionStorage.removeItem("userId");
         $.mobile.changePage("#page-signin", "slide", true, true);
         this.$ctnErr.html("<div class='error'>Session Timed Out, please login again</div>");
-        e.preventDefault();
-        e.stopPropagation();
+       return false;
     }
+    return true;
     console.log("session check 2");
 }
 
@@ -91,6 +92,7 @@ TalentSearch.SignInController.prototype.onSignInCommand = function () {
     window.sessionStorage.setItem("sessionId", Math.floor((1 + Math.random()) * 0x10000).toString(16));
     window.sessionStorage.setItem("sessionTime", today.getTime() + TalentSearch.Settings.sessionTimeoutInMSec);
     window.sessionStorage.setItem("role", "1");
+    window.sessionStorage.setItem("userId", "100");
     $.mobile.changePage("#page-home", "slide", true, true);
     return;
     $.mobile.loading("show");
@@ -109,33 +111,11 @@ TalentSearch.SignInController.prototype.onSignInCommand = function () {
         data: '{ "comment" }',
         success: function (resp) {
             $.mobile.loading("hide");
-            if (resp.success === true) {
-                $.mobile.navigate("#page-home");
-                var today = new Date();
-                var expirationDate = new Date();
-                expirationDate.setTime(today.getTime() + TalentSearch.Settings.sessionTimeoutInMSec);
-                TalentSearch.Session.getInstance().set({
-                    userProfileModel: resp.extras.userProfileModel,
-                    sessionId: resp.extras.sessionId,
-                    expirationDate: expirationDate                    
-                });
-
-                return;
-            } else {
-                if (resp.extras.msg) {
-                    switch (resp.extras.msg) {
-                        case TalentSearch.ApiMessages.SERVER_ERROR:
-                        me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
-                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                        break;
-                        case TalentSearch.ApiMessages.INVALID_CREDENTIALS:
-                        me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
-                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                        me.$txtEmailAddress.addClass(invalidInputStyle);
-                        break;
-                    }
-                }
-            }
+            window.sessionStorage.setItem("sessionId", Math.floor((1 + Math.random()) * 0x10000).toString(16));
+            window.sessionStorage.setItem("sessionTime", today.getTime() + TalentSearch.Settings.sessionTimeoutInMSec);
+            window.sessionStorage.setItem("role", "1");
+            window.sessionStorage.setItem("userId", "100");
+            return;
         },
         error: function (e) {
             $.mobile.loading("hide");

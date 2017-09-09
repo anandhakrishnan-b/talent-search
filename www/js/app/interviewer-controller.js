@@ -7,7 +7,7 @@ TalentSearch.InterviewerController = function () {
     this.$txtInterviewerName = null;
     this.$txtEmployeeId = null;
     this.$txtRole = null;
-    this.$txtDate = null;
+    this.$txtMobile = null;
     this.mainMenuPageId = null;
     this.$ctnErr = null;
 };
@@ -18,10 +18,65 @@ TalentSearch.InterviewerController.prototype.init = function () {
     this.$txtInterviewerName = $("#txt-interviewer-name", this.$page);
     this.$txtEmployeeId = $("#txt-employee-id", this.$page);
     this.$txtRole = $("#txt-role", this.$page);
-    this.$txtDate = $("#txt-date", this.$page);
+	this.$txtMobile = $("#txt-mobile", this.$page);
     this.$ctnErr = $("#ctn-err", this.$page);
     this.mainMenuPageId = "#page-interviewer";
 };
+
+TalentSearch.InterviewerController.prototype.loadPageCommand = function() {
+    
+    $.mobile.loading("hide");
+    console.log('loadPageCommand');
+    $.ajax({
+        type: 'GET',
+        url: "https://jsonplaceholder.typicode.com/posts/1/comments",
+        cache: false,
+        dataType: 'json',
+        async: false,
+        // headers: {
+        //  "Authorization": "Basic " + btoa(txtUserId + ":" + txtPassword)
+        //},
+        data: '{ "comment" }',
+        success: function(resp) {
+            alert(JSON.stringify(resp));
+            $.mobile.loading("hide");
+
+            $('#table-panel').dataTable({
+
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "aaData": resp,
+                "aoColumns": [{
+                    "sWidth" : "40%",
+                    "sTitle": "Venue",
+                    "mDataProp": "name"
+                }, {
+                    "sWidth" : "40%",
+                    "sTitle": "Location",
+                    "mDataProp": "email"
+                }, {
+                    "sWidth" : "10%",
+                    "sTitle": "Date From",
+                    "mDataProp": "email"
+                }, {
+                    "sWidth" : "10%",
+                    "sTitle": "Date To",
+                    "mDataProp": "name"
+                }],
+                "bDestroy": true
+            });
+       },
+        error: function(e) {
+            $.mobile.loading("hide");
+            console.log(e.message);
+            this.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
+            this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        }
+    });
+
+};
+
 
 
 TalentSearch.InterviewerController.prototype.resetSignInForm = function () {
@@ -36,13 +91,13 @@ TalentSearch.InterviewerController.prototype.resetSignInForm = function () {
     this.$txtInterviewerName.removeClass(invalidInputStyle);
     this.$txtEmployeeId.removeClass(invalidInputStyle);
     this.$txtRole.removeClass(invalidInputStyle);
-    this.$txtDate.removeClass(invalidInputStyle);
+    this.$txtMobile.removeClass(invalidInputStyle);
     
     
     this.$txtInterviewerName.val("");
     this.$txtEmployeeId.val("");
     this.$txtRole.val("");
-    this.$txtDate.val("");
+    this.$txtMobile.val("");
     
 };
 
@@ -51,8 +106,8 @@ TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
     var me = this,
     txtInterviewerName = me.$txtInterviewerName.val().trim(),
     txtEmployeeId = me.$txtEmployeeId.val().trim(),
-    txtRole = me.$txtRole.val().trim(),
-    txtDate = me.$txtDate.val().trim(),
+    txtRole = me.$txtRole.val(),
+    txtMobile = me.$txtMobile.val().trim(),
     
     btnSubmit = me.$btnSubmit,
     invalidInput = false,
@@ -63,7 +118,7 @@ TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
     me.$txtInterviewerName.removeClass(invalidInputStyle);
     me.$txtEmployeeId.removeClass(invalidInputStyle);
     me.$txtRole.removeClass(invalidInputStyle);
-    me.$txtDate.removeClass(invalidInputStyle);
+    me.$txtMobile.removeClass(invalidInputStyle);
     me.$ctnErr.removeClass(invalidInputStyle);
     me.$ctnErr.html("");
     // Flag each invalid field.
@@ -75,16 +130,13 @@ TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
         me.$txtEmployeeId.addClass(invalidInputStyle);
         invalidInput = true;
     }
-    if (txtRole.length === 0) {
-        me.$txtRole.addClass(invalidInputStyle);
+    
+    if (txtMobile.length === 0) {
+        me.$txtMobile.addClass(invalidInputStyle);
         invalidInput = true;
     }
-    if (txtDate.length === 0) {
-        me.$txtDate.addClass(invalidInputStyle);
-        invalidInput = true;
-    }
-    if (txtDate === 'dd-mm-yyyy') {
-        me.$txtDate.addClass(invalidInputStyle);
+    if (txtMobile === 'dd-mm-yyyy') {
+        me.$txtMobile.addClass(invalidInputStyle);
         invalidInput = true;
     }
     
@@ -100,8 +152,8 @@ TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
     //alert(window.sessionStorage.getItem("hello"));
     //btnSubmit.
     $.ajax({
-        type: 'POST',
-        url: TalentSearch.Settings.signInUrl,
+        type: 'GET',
+        url: "https://jsonplaceholder.typicode.com/posts/1/comments",
         cache : false,
         dataType: 'json',
         async: false,
@@ -111,33 +163,7 @@ TalentSearch.InterviewerController.prototype.onSignInCommand = function () {
         data: '{ "comment" }',
         success: function (resp) {
             $.mobile.loading("hide");
-            if (resp.success === true) {
-                $.mobile.navigate("#page-home");
-                var today = new Date();
-                var expirationDate = new Date();
-                expirationDate.setTime(today.getTime() + TalentSearch.Settings.sessionTimeoutInMSec);
-                TalentSearch.Session.getInstance().set({
-                    userProfileModel: resp.extras.userProfileModel,
-                    sessionId: resp.extras.sessionId,
-                    expirationDate: expirationDate                    
-                });
-
-                return;
-            } else {
-                if (resp.extras.msg) {
-                    switch (resp.extras.msg) {
-                        case TalentSearch.ApiMessages.SERVER_ERROR:
-                        me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
-                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                        break;
-                        case TalentSearch.ApiMessages.INVALID_CREDENTIALS:
-                        me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
-                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                        me.$txtEmailAddress.addClass(invalidInputStyle);
-                        break;
-                    }
-                }
-            }
+           
         },
         error: function (e) {
             $.mobile.loading("hide");

@@ -21,6 +21,57 @@ TalentSearch.UserController.prototype.init = function () {
     this.mainMenuPageId = "#page-user";
 };
 
+TalentSearch.UserController.prototype.loadPageCommand = function() {
+    $.mobile.loading("hide");
+    console.log('loadPageCommand');
+    $.ajax({
+        type: 'GET',
+        url: "https://jsonplaceholder.typicode.com/posts/1/comments",
+        cache: false,
+        dataType: 'json',
+        async: false,
+        // headers: {
+        //  "Authorization": "Basic " + btoa(txtUserId + ":" + txtPassword)
+        //},
+        data: '{ "comment" }',
+        success: function(resp) {
+            alert(JSON.stringify(resp));
+            $.mobile.loading("hide");
+
+            $('#table-user').dataTable({
+
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "aaData": resp,
+                "aoColumns": [{
+                    "sWidth" : "40%",
+                    "sTitle": "Venue",
+                    "mDataProp": "name"
+                }, {
+                    "sWidth" : "40%",
+                    "sTitle": "Location",
+                    "mDataProp": "email"
+                }, {
+                    "sWidth" : "10%",
+                    "sTitle": "Date From",
+                    "mDataProp": "email"
+                }, {
+                    "sWidth" : "10%",
+                    "sTitle": "Date To",
+                    "mDataProp": "name"
+                }],
+                "bDestroy": true
+            });
+       },
+        error: function(e) {
+            $.mobile.loading("hide");
+            console.log(e.message);
+            this.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
+            this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        }
+    });
+};
 
 TalentSearch.UserController.prototype.resetSignInForm = function () {
 
@@ -37,7 +88,7 @@ TalentSearch.UserController.prototype.resetSignInForm = function () {
     
     this.$txtUser.val("");
     this.$selectVenueId.val("");
-    this.$selectStatus.val("");
+    this.$selectStatus.val("Active");
     
 };
 
@@ -80,46 +131,46 @@ TalentSearch.UserController.prototype.onSignInCommand = function () {
     //alert(window.sessionStorage.getItem("hello"));
     //btnSubmit.
     $.ajax({
-        type: 'POST',
-        url: TalentSearch.Settings.signInUrl,
-        cache : false,
+        type: 'GET',
+        url: "https://jsonplaceholder.typicode.com/posts/1/comments",
+        cache: false,
         dataType: 'json',
         async: false,
-       // headers: {
-          //  "Authorization": "Basic " + btoa(txtUserId + ":" + txtPassword)
+        // headers: {
+        //  "Authorization": "Basic " + btoa(txtUserId + ":" + txtPassword)
         //},
         data: '{ "comment" }',
-        success: function (resp) {
+        success: function(resp) {
+            alert(JSON.stringify(resp));
             $.mobile.loading("hide");
-            if (resp.success === true) {
-                $.mobile.navigate("#page-home");
-                var today = new Date();
-                var expirationDate = new Date();
-                expirationDate.setTime(today.getTime() + TalentSearch.Settings.sessionTimeoutInMSec);
-                TalentSearch.Session.getInstance().set({
-                    userProfileModel: resp.extras.userProfileModel,
-                    sessionId: resp.extras.sessionId,
-                    expirationDate: expirationDate                    
-                });
 
-                return;
-            } else {
-                if (resp.extras.msg) {
-                    switch (resp.extras.msg) {
-                        case TalentSearch.ApiMessages.SERVER_ERROR:
-                        me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
-                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                        break;
-                        case TalentSearch.ApiMessages.INVALID_CREDENTIALS:
-                        me.$ctnErr.html("<div class='error'>The email address that you provided is already registered.</div");
-                        me.$ctnErr.addClass("bi-ctn-err").slideDown();
-                        me.$txtEmailAddress.addClass(invalidInputStyle);
-                        break;
-                    }
-                }
-            }
-        },
-        error: function (e) {
+            $('#table-user').dataTable({
+
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "aaData": resp,
+                "aoColumns": [{
+                    "sWidth" : "40%",
+                    "sTitle": "Venue",
+                    "mDataProp": "name"
+                }, {
+                    "sWidth" : "40%",
+                    "sTitle": "Location",
+                    "mDataProp": "email"
+                }, {
+                    "sWidth" : "10%",
+                    "sTitle": "Date From",
+                    "mDataProp": "email"
+                }, {
+                    "sWidth" : "10%",
+                    "sTitle": "Date To",
+                    "mDataProp": "name"
+                }],
+                "bDestroy": true
+            });
+       },
+       error: function (e) {
             $.mobile.loading("hide");
             console.log(e.message);
             me.$ctnErr.html("<div class='error'>Oops! TalentSearch had a problem and could not process your request.  Please try again in a few minutes.</div>");
