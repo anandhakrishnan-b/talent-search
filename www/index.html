@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -8,13 +9,17 @@
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <script src="js/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="css/jquery.dialogbox.css" />
+	<link rel="stylesheet" href="css/jquery.dataTables.min.css" />
+	
+	<script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
-
+    <script src="js/jquery.dialogBox.js"></script>
+    
     <script src="js/app/api-messages.js"></script>
     <script src="js/app/app.js"></script>
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
-    <script type="text/javascript" src="https://datatables.net/release-datatables/media/js/jquery.dataTables.js"></script>
+    
+    <script type="text/javascript" src="js/jquery.dataTables.js"></script>
     <script src="js/app/init-app.js"></script>
     <script src="js/app/settings.js"></script>
     <script src="js/app/selection-controller.js"></script>
@@ -31,7 +36,8 @@
     <div data-role="page" data-bookit-page="signIn" id="page-signin">
         <div data-role="header" data-theme="c">
             <h1>Talent Search</h1>
-        </div><!-- /header -->
+        </div>
+        <!-- /header -->
         <div role="main" class="ui-content">
             <h3>Sign In</h3>
             <div id="ctn-err" class="bi-invisible"></div>
@@ -40,13 +46,16 @@
             <label for="txt-password">Password</label>
             <input type="password" name="txt-password" id="txt-password" value="">
             <a href="#" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
-        </div><!-- /content -->
-    </div><!-- /page -->
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
 
     <div data-role="page" id="page-home">
         <div data-role="header" data-theme="c" data-position="fixed">
             <h1>Home</h1>
-        </div><!-- /header -->
+        </div>
+        <!-- /header -->
         <div role="main" class="ui-content">
             <h2 class="mc-text-center">Welcome!</h2>
             <p class="mc-top-margin-1-5"><b>To see venue details</b></p>
@@ -60,7 +69,8 @@
             <p class="mc-top-margin-1-5"><b>To Logout</b></p>
             <a href="#" class="logout ui-btn ui-btn-b ui-corner-all">Logout</a>
             <p></p>
-        </div><!-- /content -->
+        </div>
+        <!-- /content -->
     </div>
 
 
@@ -69,7 +79,8 @@
         <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
             <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
             <h1>Venue Details</h1>
-        </div><!-- /header -->
+        </div>
+        <!-- /header -->
         <div role="main" class="ui-content">
             <div id="ctn-err" class="bi-invisible"></div>
             <label for="txt-venue-name">Venue</label>
@@ -80,64 +91,71 @@
             <input type="date" data-role="date" name="txt-date-from" id="txt-date-from" value="">
             <label for="txt-date-to">Date To</label>
             <input type="date" data-role="date" name="txt-date-to" id="txt-date-to" value="">
-            <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
-			<table id="table-venue"  cellspacing="0" width="100%" ></table>
-        </div><!-- /content -->
-    </div><!-- /page -->
+            <a href="##" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <div id="popup"></div>
+            <table id="table-venue" cellspacing="0" width="100%"></table>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
 
-    <div data-role ="page" id="page-user">
+    <div data-role="page" id="page-user">
         <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
             <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
             <h1>User Details</h1>
-        </div><!-- /header -->
+        </div>
+        <!-- /header -->
         <div role="main" class="ui-content">
             <div id="ctn-err" class="bi-invisible"></div>
-            <label for="select-venue">Venue</label>
-            <select id="selecct-venue">
-                <option value="">Select</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-            </select>
-            <label for="txt-user">User</label>
+            <label for="txt-user">User Name</label>
             <input type="text" name="txt-user" id="txt-user" value="">
-            <label for="select-status">Status</label>
-            <select id="select-status">
-                <option value="volvo">Active</option>
-                <option value="saab">InActive</option>
+			<label for="txt-user">Password</label>
+            <input type="password" name="txt-password" id="txt-password" value="">
+            <label for="select-venue">Venue</label>
+            <select id="select-venue">
+                <option value="1">VIT Chennai</option>
+                <option value="2">VIT Vellore</option>
+                <option value="3">VIT SUrat</option>
             </select>
-            <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
-			<table id="table-user"  cellspacing="0" width="100%" ></table>
-        </div><!-- /content -->
+            <a href="##" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <div id="popup"></div>
+            <table id="table-user" cellspacing="0" width="100%"></table>
+        </div>
+        <!-- /content -->
     </div>
     <div data-role="page" id="page-interviewer">
         <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
             <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
             <h1>Panel Details</h1>
-        </div><!-- /header -->
+        </div>
+        <!-- /header -->
         <div role="main" class="ui-content">
             <div id="ctn-err" class="bi-invisible"></div>
             <label for="txt-interviewer-name">Name</label>
             <input type="text" name="txt-interviewer-name" id="txt-interviewer-name" value="">
             <label for="txt-employee-id">Employee Id</label>
             <input type="number" name="txt-employee-id" id="txt-employee-id" value="">
-            <label for="txt-role">Role</label>
+            <label for="select-role">Role</label>
             <select id="select-role">
                 <option value="HR">HR</option>
                 <option value="Technincal">Technical</option>
             </select>
             <label for="txt-mobile">Mobile Number</label>
             <input type="number" name="txt-mobile" id="txt-mobile" value="">
-            <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
-			<table id="table-panel"  cellspacing="0" width="100%" ></table>
-        </div><!-- /content -->
-    </div><!-- /page -->
+            <a href="##" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <div id="popup"></div>
+            <table id="table-panel" cellspacing="0" width="100%"></table>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
 
     <div data-role="page" id="page-selection">
         <div class="bi-header" data-role="header" data-theme="c" data-position="fixed">
             <a href="#page-home" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
             <h1>Selection Details</h1>
-        </div><!-- /header -->
+        </div>
+        <!-- /header -->
         <div role="main" class="ui-content" id="selection-edit">
             <div id="ctn-err" class="bi-invisible"></div>
             <label for="txt-date">Date</label>
@@ -147,12 +165,16 @@
             <label for="txt-selected">Total Selected</label>
             <input type="number" name="txt-selected" id="txt-selected" value="">
             <label for="txt-women">Total Womens Selected</label>
-            <input type="number"  name="txt-women" id="txt-women" value="">
+            <input type="number" name="txt-women" id="txt-women" value="">
             <label for="txt-comments">Comments</label>
-            <input type="text"  name="txt-comments" id="txt-comments" value="">
-            <a href="#dlg-invalid-data" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
-			<table id="table-selection"  cellspacing="0" width="100%" ></table>
-        </div><!-- /content -->
-    </div><!-- /page -->
+            <input type="text" name="txt-comments" id="txt-comments" value="">
+            <a href="##" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <div id="popup"></div>
+            <table id="table-selection" cellspacing="0" width="100%"></table>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
 </body>
+
 </html>

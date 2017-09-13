@@ -1,6 +1,6 @@
 ﻿var TalentSearch = TalentSearch || {};
 
-TalentSearch.VenueController = function () {
+TalentSearch.VenueController = function() {
 
     this.$page = null;
     this.$btnSubmit = null;
@@ -12,7 +12,7 @@ TalentSearch.VenueController = function () {
     this.$ctnErr = null;
 };
 
-TalentSearch.VenueController.prototype.init = function () {
+TalentSearch.VenueController.prototype.init = function() {
     this.$page = $("#page-venue");
     this.$btnSubmit = $("#btn-submit", this.$page);
     this.$txtVenueName = $("#txt-venue-name", this.$page);
@@ -24,30 +24,30 @@ TalentSearch.VenueController.prototype.init = function () {
 };
 
 
-TalentSearch.VenueController.prototype.resetSignInForm = function () {
+TalentSearch.VenueController.prototype.resetSignInForm = function() {
 
     var invisibleStyle = "bi-invisible",
-    invalidInputStyle = "bi-invalid-input";
+        invalidInputStyle = "bi-invalid-input";
 
     this.$ctnErr.html("");
     this.$ctnErr.removeClass().addClass(invisibleStyle);
-    
 
-    
+
+
     this.$txtVenueName.removeClass(invalidInputStyle);
     this.$txtLocation.removeClass(invalidInputStyle);
     this.$txtDateFrom.removeClass(invalidInputStyle);
     this.$txtDateTo.removeClass(invalidInputStyle);
-    
-    
+
+
     this.$txtVenueName.val("");
     this.$txtLocation.val("");
     this.$txtDateFrom.val("");
     this.$txtDateTo.val("");
-    
+
 };
 TalentSearch.VenueController.prototype.loadPageCommand = function() {
-    if(window.sessionStorage.getItem("role") == 1){
+    if (window.sessionStorage.getItem("role") == 1) {
         $("#add-venue").show();
     } else {
         $("#add-venue").hide();
@@ -56,16 +56,20 @@ TalentSearch.VenueController.prototype.loadPageCommand = function() {
     console.log('loadPageCommand');
     $.ajax({
         type: 'GET',
-        url: "https://jsonplaceholder.typicode.com/posts/1/comments",
+        url: TalentSearch.Settings.loadVenuesUrl,
+        dataType: 'json',
         cache: false,
         dataType: 'json',
+        contentType: "application/json; charset=utf-8",
         async: false,
-        // headers: {
-        //  "Authorization": "Basic " + btoa(txtUserId + ":" + txtPassword)
-        //},
-        data: '{ "comment" }',
+        processData:  false,
+        headers: {
+            "Authorization": window.sessionStorage.getItem("sessionId"),
+            "UserId": window.sessionStorage.getItem("userId")
+        },
+        //data: '{ "comment" }',
         success: function(resp) {
-            alert(JSON.stringify(resp));
+
             $.mobile.loading("hide");
 
             $('#table-venue').dataTable({
@@ -75,25 +79,25 @@ TalentSearch.VenueController.prototype.loadPageCommand = function() {
                 "info": false,
                 "aaData": resp,
                 "aoColumns": [{
-                    "sWidth" : "40%",
+                    "sWidth": "40%",
                     "sTitle": "Venue",
-                    "mDataProp": "name"
+                    "mDataProp": "venueName"
                 }, {
-                    "sWidth" : "40%",
+                    "sWidth": "40%",
                     "sTitle": "Location",
-                    "mDataProp": "email"
+                    "mDataProp": "venueLocation"
                 }, {
-                    "sWidth" : "10%",
+                    "sWidth": "10%",
                     "sTitle": "Date From",
-                    "mDataProp": "email"
+                    "mDataProp": "dateFrom"
                 }, {
-                    "sWidth" : "10%",
+                    "sWidth": "10%",
                     "sTitle": "Date To",
-                    "mDataProp": "name"
+                    "mDataProp": "dateTo"
                 }],
                 "bDestroy": true
             });
-       },
+        },
         error: function(e) {
             $.mobile.loading("hide");
             console.log(e.message);
@@ -108,15 +112,15 @@ TalentSearch.VenueController.prototype.onSignInCommand = function() {
 
     console.log('onSignInCommand');
     var me = this,
-    txtVenueName = me.$txtVenueName.val().trim(),
-    txtLocation = me.$txtLocation.val().trim(),
-    txtDateFrom = me.$txtDateFrom.val().trim(),
-    txtDateTo = me.$txtDateTo.val().trim(),
-    
-    btnSubmit = me.$btnSubmit,
-    invalidInput = false,
-    invisibleStyle = "bi-invisible",
-    invalidInputStyle = "bi-invalid-input";
+        txtVenueName = me.$txtVenueName.val().trim(),
+        txtLocation = me.$txtLocation.val().trim(),
+        txtDateFrom = me.$txtDateFrom.val().trim(),
+        txtDateTo = me.$txtDateTo.val().trim(),
+
+        btnSubmit = me.$btnSubmit,
+        invalidInput = false,
+        invisibleStyle = "bi-invisible",
+        invalidInputStyle = "bi-invalid-input";
 
     // Reset styles.
     me.$txtVenueName.removeClass(invalidInputStyle);
@@ -155,23 +159,36 @@ TalentSearch.VenueController.prototype.onSignInCommand = function() {
         me.$ctnErr.addClass("bi-ctn-err").slideDown();
         return;
     }
-    
+
     $.mobile.loading("show");
-    //window.sessionStorage.setItem("hello", "sessionId");
-    //alert(window.sessionStorage.getItem("hello"));
-    //btnSubmit.
     $.ajax({
-        type: 'GET',
-        url: "https://jsonplaceholder.typicode.com/posts/1/comments",
+        type: 'POST',
+        url: TalentSearch.Settings.addVenueUrl,
         cache: false,
         dataType: 'json',
+        contentType: "application/json; charset=utf-8",
         async: false,
-       // headers: {
-          //  "Authorization": "Basic " + btoa(txtUserId + ":" + txtPassword)
-        //},
-        data: '{ "comment" }',
-        success: function (resp) {
+        processData:  false,
+        headers: {
+            "Authorization": window.sessionStorage.getItem("sessionId"),
+            "UserId": window.sessionStorage.getItem("userId")
+        },
+        data: JSON.stringify({
+            "venueName": txtVenueName,
+             "venueLocation" : txtLocation,
+            "dateFrom": txtDateFrom,
+            "dateTo": txtDateTo
+        }),
+        success: function(resp) {
             $.mobile.loading("hide");
+            $('#popup', this.mainMenuPageId).dialogBox({
+                hasClose: true,
+                hasMask: true,
+                time: 3000,
+                title: 'Success',
+                content: 'Data Saved Successfully !!'
+            });
+            this.resetSignInForm();
 
             $('#table-venue').dataTable({
                 "scrollX": true,
@@ -180,27 +197,27 @@ TalentSearch.VenueController.prototype.onSignInCommand = function() {
                 "info": false,
                 "aaData": resp,
                 "aoColumns": [{
-                    "sWidth" : "40%",
+                    "sWidth": "40%",
                     "sTitle": "Venue",
-                    "mDataProp": "name"
+                    "mDataProp": "venueName"
                 }, {
-                    "sWidth" : "40%",
+                    "sWidth": "40%",
                     "sTitle": "Location",
-                    "mDataProp": "email"
+                    "mDataProp": "venueLocation"
                 }, {
-                    "sWidth" : "10%",
+                    "sWidth": "10%",
                     "sTitle": "Date From",
-                    "mDataProp": "email"
+                    "mDataProp": "dateFrom"
                 }, {
-                    "sWidth" : "10%",
+                    "sWidth": "10%",
                     "sTitle": "Date To",
-                    "mDataProp": "name"
+                    "mDataProp": "dateTo"
                 }],
                 "bDestroy": true
 
             });
             return;
-         },
+        },
         error: function(e) {
             $.mobile.loading("hide");
             console.log(e.message);

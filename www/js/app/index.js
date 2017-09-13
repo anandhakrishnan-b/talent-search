@@ -4,17 +4,17 @@ var TalentSearch = TalentSearch || {};
 
 var app = {
     // Application Constructor
-    initialize: function () {
+    initialize: function() {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function () {
+    bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        document.addEventListener("backbutton", function(e){
-            if($.mobile.activePage.is('#page-signin')){
+        document.addEventListener("backbutton", function(e) {
+            if ($.mobile.activePage.is('#page-signin')) {
                 /* 
                  Event preventDefault/stopPropagation not required as adding backbutton
                   listener itself override the default behaviour. Refer below PhoneGap link.
@@ -25,8 +25,7 @@ var app = {
                 window.sessionStorage.removeItem("role");
                 window.sessionStorage.removeItem("userId");
                 navigator.app.exitApp();
-            }
-            else {
+            } else {
                 navigator.app.backHistory()
             }
         }, false);
@@ -35,11 +34,11 @@ var app = {
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function () {
+    onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
-    receivedEvent: function (id) {
+    receivedEvent: function(id) {
 
     }
 };
@@ -48,7 +47,7 @@ app.initialize();
 
 // End boilerplate code.
 
-$(document).on("mobileinit", function (event, ui) {
+$(document).on("mobileinit", function(event, ui) {
     $.mobile.defaultPageTransition = "slide";
 });
 
@@ -64,124 +63,123 @@ app.userController = new TalentSearch.UserController();
 //    app.signInController.resetSignUpForm();
 //});
 
-$(document).on("pagecontainerbeforeshow", function (event, ui) {
+$(document).on("pagecontainerbeforeshow", function(event, ui) {
     if (typeof ui.toPage == "object") {
         switch (ui.toPage.attr("id")) {
             case "page-signin":
                 // Reset the signup form.
                 app.signInController.resetSignInForm();
                 break;
-            }
         }
-    });
+    }
+});
 
-$(document).on("pagebeforechange", function (event, ui) {
+$(document).on("pagebeforechange", function(event, ui) {
     if (typeof ui.toPage == "object") {
         switch (ui.toPage.attr("id")) {
 
             case "page-venue":
-                    app.signInController.sessionCheck(event, ui);
-                    if(app.signInController.sessionCheck(event, ui)){
-                        app.venueController.resetSignInForm();
-                        app.venueController.loadPageCommand();
-                    } else {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
+                app.signInController.sessionCheck(event, ui);
+                if (app.signInController.sessionCheck(event, ui)) {
+                    app.venueController.resetSignInForm();
+                   // app.venueController.loadPageCommand();
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
                 break;
-                case "page-selection":
-                  
-                    if(app.signInController.sessionCheck(event, ui)){
-                        app.selectionController.resetSignInForm();
-                        app.selectionController.loadPageCommand();
-                    } else {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
+            case "page-selection":
+
+                if (app.signInController.sessionCheck(event, ui)) {
+                    app.selectionController.resetSignInForm();
+                    app.selectionController.loadPageCommand();
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
                 break;
-                case "page-interviewer":
-                    
-                    if(app.signInController.sessionCheck(event, ui)){
-                        app.interviewerController.resetSignInForm();
-                        app.interviewerController.loadPageCommand();
-                    } else {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
+            case "page-interviewer":
+
+                if (app.signInController.sessionCheck(event, ui)) {
+                    app.interviewerController.resetSignInForm();
+                    app.interviewerController.loadPageCommand();
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
                 break;
-                case "page-user":
-                    alert("page-user");
-                    if(app.signInController.sessionCheck(event, ui)){
-                        app.userController.resetSignInForm();
-                        app.userController.loadPageCommand();
-                    } else {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
+            case "page-user":
+                if (app.signInController.sessionCheck(event, ui)) {
+                    app.userController.resetSignInForm();
+                    app.userController.loadPageCommand();
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
                 break;
-                case "page-home":
-             
-                if(app.signInController.sessionCheck(event, ui)){
-                    if(window.sessionStorage.getItem("role") == 1 ){
-                       $("#user-menu").show();
+            case "page-home":
+
+                if (app.signInController.sessionCheck(event, ui)) {
+                    if (window.sessionStorage.getItem("role") == 1) {
+                        $("#user-menu").show();
                     } else {
                         $("#user-menu").hide();
                     }
-                    } else {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-          
+                } else {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
                 break;
-            }
         }
-    });
+    }
+});
 
 
-$(document).delegate("#page-signin", "pagebeforecreate", function () {
+$(document).delegate("#page-signin", "pagebeforecreate", function() {
 
     app.signInController.init();
 
-    app.signInController.$btnSubmit.off("tap").on("tap", function () {
+    app.signInController.$btnSubmit.off("tap").on("tap", function() {
         app.signInController.onSignInCommand();
     });
 
 });
 
-$(document).delegate("#page-venue", "pagebeforecreate", function () {
+$(document).delegate("#page-venue", "pagebeforecreate", function() {
 
     app.venueController.init();
 
-    app.venueController.$btnSubmit.off("tap").on("tap", function () {
+    app.venueController.$btnSubmit.off("tap").on("tap", function() {
         app.venueController.onSignInCommand();
     });
 
 });
 
-$(document).delegate("#page-selection", "pagebeforecreate", function () {
+$(document).delegate("#page-selection", "pagebeforecreate", function() {
 
     app.selectionController.init();
 
-    app.selectionController.$btnSubmit.off("tap").on("tap", function () {
+    app.selectionController.$btnSubmit.off("tap").on("tap", function() {
         app.selectionController.onSignInCommand();
     });
 
 });
-$(document).delegate("#page-interviewer", "pagebeforecreate", function () {
+$(document).delegate("#page-interviewer", "pagebeforecreate", function() {
 
     app.interviewerController.init();
 
-    app.interviewerController.$btnSubmit.off("tap").on("tap", function () {
+    app.interviewerController.$btnSubmit.off("tap").on("tap", function() {
         app.interviewerController.onSignInCommand();
     });
 
 });
 
-$(document).delegate("#page-user", "pagebeforecreate", function () {
+$(document).delegate("#page-user", "pagebeforecreate", function() {
 
     app.userController.init();
 
-    app.userController.$btnSubmit.off("tap").on("tap", function () {
+    app.userController.$btnSubmit.off("tap").on("tap", function() {
         app.userController.onSignInCommand();
     });
 
